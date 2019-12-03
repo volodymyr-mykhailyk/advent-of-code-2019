@@ -2,8 +2,9 @@ module Day01
   class Verifications
     def self.module_fuel_requirements
       [
-        {input: 12, output: 4},
-        {input: 14, output: 4},
+        {input: 4, output: 0},
+        {input: 12, output: 2},
+        {input: 14, output: 2},
         {input: 1969, output: 654},
         {input: 100756, output: 33583},
       ]
@@ -11,8 +12,9 @@ module Day01
 
     def self.total_fuel_requirements
       [
-        {input: [12, 14], output: 4+4},
-        {input: [12, 14, 1969, 100756], output: 4+4+654+33583},
+        {input: [4, 12], output: 2},
+        {input: [12, 14], output: 2 + 2},
+        {input: [12, 14, 1969, 100756], output: 2 + 2 + 654 + 33583},
       ]
     end
   end
