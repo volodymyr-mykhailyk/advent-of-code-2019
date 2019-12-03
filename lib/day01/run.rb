@@ -3,4 +3,4 @@ require_relative 'solution'
 
 solution = Day01::Solution.new
 input = Common::InputFileReader.new(File.expand_path('input.txt')).as_lines_array.map(&:to_i)
-puts solution.total_fuel_requirements(input)
+puts solution.total_fuel_for_modules(input)
