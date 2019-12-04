@@ -9,67 +9,84 @@ module Universe
         2 => :multiply_numbers,
         99 => :abort_program
       }
-      def initialize(state)
-        @state = state
-        @position = 0
+
+      def initialize(memory)
+        @memory = memory
+        @pointer = 0
       end
 
       def run_program
-        MAX_ITERATIONS.times { run_command }
+        MAX_ITERATIONS.times { run_instruction }
         raise 'Infinite loop'
       rescue Errors::EndOfProgram => _
-        @state
+        @memory
       end
 
-      def run_command
-        next_command.call
-        advance_position
-        @state
+      def run_instruction
+        next_instruction.call
+        @memory
       end
 
       protected
 
-      def abort_program(*_args)
+      def abort_program
         raise Errors::EndOfProgram, 'Reached end'
       end
 
-      def advance_position
-        @position += 4
+      def unknown_command
+        raise 'Unknown command'
       end
 
       def add_numbers
-        input1_address, input2_address, output_address = command_arguments
+        input1_address, input2_address, output_address = instruction_parameters(3)
         result = get_value(input1_address) + get_value(input2_address)
         put_value(output_address, result)
+        advance_to_next_instruction(3)
       end
 
       def multiply_numbers
-        input1_address, input2_address, output_address = command_arguments
+        input1_address, input2_address, output_address = instruction_parameters(3)
         result = get_value(input1_address) * get_value(input2_address)
         put_value(output_address, result)
+        advance_to_next_instruction(3)
       end
 
-      def next_command
-        raise 'Command overflow' unless (command = @state[@position])
-        raise 'Unknown command' unless OP_CODES[command]
-        method(OP_CODES[command])
+      def next_instruction
+        instruction = get_value(@pointer)
+        puts @pointer
+        puts instruction
+        command_name = OP_CODES[instruction]
+        puts command_name.inspect
+        method(command_name || :unknown_command)
       end
 
-      def command_arguments
-        raise 'Arguments overflow' unless @state.length >= @position + 3
-        @state[@position + 1, 3]
+      def instruction_parameters(arity)
+        check_address!(@pointer + arity + 1)
+        @memory[@pointer + 1, arity]
+      end
+
+      def advance_to_next_instruction(arity)
+        @pointer += 1 + arity
       end
 
       def get_value(address)
-        raise 'Get Overflow' unless (value = @state[address])
-
-        value
+        check_address!(address)
+        @memory[address]
       end
 
       def put_value(address, value)
-        raise 'Get Overflow' unless @state[address]
+        check_address!(address)
+        @memory[address] = value
+      end
 
-        @state[address] = value
+      def check_address!(address)
+        raise 'Memory overflow' if memory_length < address
+
+        true
+      end
+
+      def memory_length
+        @memory_length ||= @memory.length
       end
     end
   end
