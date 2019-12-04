@@ -7,6 +7,7 @@ module Universe
         return false unless valid_length?(digits)
         return false unless increasing_numbers?(digits)
         return false unless repeated_numbers?(digits)
+        return false unless has_double_digits?(digits)
 
         true
       end
@@ -25,6 +26,12 @@ module Universe
 
       def repeated_numbers?(digits)
         digits.uniq.count < 6
+      end
+
+      def has_double_digits?(digits)
+        digits.uniq.any? do |digit|
+          digits.count(digit) == 2
+        end
       end
 
       def valid_length?(digits)
