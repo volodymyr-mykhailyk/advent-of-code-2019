@@ -1,7 +1,15 @@
-require_relative 'input_reader'
-require_relative 'passwords_counter'
+require_relative '../utils/printer'
+require_relative '../utils/input_reader'
+require_relative '../../universe/fuel_station/password_verifier'
 
-inputs = Tasks::Day04::InputReader.new.(File.expand_path('input1.txt'))
-puts "Calculating passwords for #{inputs}"
-output = Tasks::Day04::PasswordsCounter.new.(*inputs)
-puts "Passwords count #{output}"
+include Utils::Printer
+
+input_reader = Utils::InputReader.new(File.expand_path('input1.txt'))
+
+inputs = input_reader.one_line.split_with('-').to_integer.read
+info "Calculating passwords for #{inputs}"
+
+password_verifier = Universe::FuelStation::PasswordVerifier.new
+
+output = (inputs[0]..inputs[1]).count { |password| password_verifier.valid?(password) }
+info "Passwords count #{output}"

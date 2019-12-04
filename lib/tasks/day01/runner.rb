@@ -1,11 +1,12 @@
 require_relative '../utils/printer'
-require_relative '../../common/input_file_reader'
+require_relative '../utils/input_reader'
 require_relative '../../universe/ship/fuel_counter'
 
 include Utils::Printer
 
-input_reader = Common::InputFileReader.new(File.expand_path('input.txt'))
-input = input_reader.as_lines_array.map(&:to_i)
+input_reader = Utils::InputReader.new(File.expand_path('input.txt'))
+
+input = input_reader.all_lines.to_integer.read
 info "Calculating fuel for #{input.length} modules"
 
 fuel_counter = Universe::Ship::FuelCounter.new
