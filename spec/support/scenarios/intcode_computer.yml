@@ -46,7 +46,7 @@
   output: [1]
 - title: is input less then 8
   program: [3, 3, 1107, -1, 8, 3, 4, 3, 99]
-  state: [3, 9, 8, 9, 10, 9, 4, 9, 99, 1, 8]
+  state: [3, 3, 1107, 1, 8, 3, 4, 3, 99]
   input: [5]
   output: [1]
 - title: jumps test

@@ -3,6 +3,8 @@ require_relative 'instructions/multiply'
 require_relative 'instructions/exit'
 require_relative 'instructions/input'
 require_relative 'instructions/output'
+require_relative 'instructions/less_than'
+require_relative 'instructions/equals'
 
 module Universe
   module Ship
@@ -14,6 +16,8 @@ module Universe
           Instructions::Exit,
           Instructions::Input,
           Instructions::Output,
+          Instructions::LessThan,
+          Instructions::Equals,
         ]
       end
     end
