@@ -6,3 +6,5 @@ module Utils
     end
   end
 end
+
+include Utils::Printer

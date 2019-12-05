@@ -2,8 +2,6 @@ require_relative '../utils/printer'
 require_relative '../utils/input_reader'
 require_relative '../../universe/ship/intcode_computer'
 
-include Utils::Printer
-
 input_reader = Utils::InputReader.new(File.expand_path('input.txt'))
 
 default_state = input_reader.one_line.split_with(',').to_integer.read
