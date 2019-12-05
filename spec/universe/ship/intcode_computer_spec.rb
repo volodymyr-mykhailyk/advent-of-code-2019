@@ -4,19 +4,25 @@ require 'universe/ship/intcode_computer'
 RSpec.describe Universe::Ship::IntcodeComputer do
   describe '.run_program' do
     PROGRAMS = [
-      {input: [99], output: [99]},
-      {input: [1, 0, 0, 0, 99], output: [2, 0, 0, 0, 99]},
-      {input: [2, 3, 0, 3, 99], output: [2, 3, 0, 6, 99]},
-      {input: [2, 4, 4, 5, 99, 0], output: [2, 4, 4, 5, 99, 9801]},
-      {input: [1, 1, 1, 4, 99, 5, 6, 0, 99], output: [30, 1, 1, 4, 2, 5, 6, 0, 99]},
-      {input: [4, 0, 99], output: [4, 0, 99]},
-      {input: [1101, 100, -1, 4, 0], output: [1101, 100, -1, 4, 99]},
+      {program: [99], input: [], output: [], state: [99]},
+      {program: [1, 0, 0, 0, 99], input: [], output: [], state: [2, 0, 0, 0, 99]},
+      {program: [2, 3, 0, 3, 99], input: [], output: [], state: [2, 3, 0, 6, 99]},
+      {program: [2, 4, 4, 5, 99, 0], input: [], output: [], state: [2, 4, 4, 5, 99, 9801]},
+      {program: [1, 1, 1, 4, 99, 5, 6, 0, 99], input: [], output: [], state: [30, 1, 1, 4, 2, 5, 6, 0, 99]},
+      {program: [4, 0, 99], input: [], output: [4], state: [4, 0, 99]},
+      {program: [1101, 100, -1, 4, 0], input: [], output: [], state: [1101, 100, -1, 4, 99]},
     ]
 
-    PROGRAMS.each do |input:, output:|
-      it "correctly executes for #{input} state" do
-        computer = described_class.new(input)
-        expect(computer.run_program).to eq(output)
+    PROGRAMS.each do |program:, input:, output:, state:|
+      it "produce correct state for #{program} program" do
+        computer = described_class.new(program, input)
+        expect(computer.run_program).to eq(state)
+      end
+
+      it "produce correct output for #{program} program" do
+        computer = described_class.new(program, input)
+        computer.run_program
+        expect(computer.output).to eq(output)
       end
     end
   end
