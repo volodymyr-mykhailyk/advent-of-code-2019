@@ -1,24 +1,25 @@
 require_relative 'abstract'
+require_relative '../../errors/end_of_program'
 
 module Universe
   module Ship
     module Computer
       module Instructions
-        class Multiply < Abstract
-          def execute_on_values(input1, input2)
-            input1 * input2
+        class Exit < Abstract
+          def execute_on_values(*_args)
+            raise Universe::Ship::Errors::EndOfProgram, 'Program ended'
           end
 
           def opcode
-            2
+            99
           end
 
           def has_output?
-            true
+            false
           end
 
           def arguments_count
-            2
+            0
           end
         end
       end

@@ -13,11 +13,11 @@ module Universe
             1
           end
 
-          def output_offset
-            3
+          def has_output?
+            true
           end
 
-          def instruction_arity
+          def arguments_count
             2
           end
         end

@@ -27,7 +27,8 @@ RSpec.describe Universe::Ship::Computer::IntMemory do
     end
 
     it 'does not update value when error' do
-      subject.put_value(-1, 0); rescue => _
+      subject.put_value(-1, 0)
+    rescue => _
       expect(subject.contents).to eq([0, 1, 4, 3])
     end
 

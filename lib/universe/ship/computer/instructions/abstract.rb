@@ -11,9 +11,8 @@ module Universe
 
           def execute_in(memory)
             instruction = memory.get_value(memory.pointer)
-            output_address = output_address(memory)
             result = execute_instruction(memory, instruction)
-            memory.put_value(output_address, result)
+            write_output(memory, result)
             advance_to_next_instruction(memory)
             memory
           end
@@ -21,8 +20,17 @@ module Universe
 
           private
 
+          def write_output(memory, result)
+            return unless has_output?
+
+            output_address = output_address(memory)
+            memory.put_value(output_address, result)
+          end
+
           def advance_to_next_instruction(memory)
-            memory.advance_by(output_offset + 1)
+            memory.advance_by(1)
+            memory.advance_by(arguments_count)
+            memory.advance_by(1) if has_output?
           end
 
           def execute_instruction(memory, instruction)
@@ -32,7 +40,7 @@ module Universe
           end
 
           def extract_argument_pointers(memory, instruction)
-            instruction_arity.times.map do |argument_position|
+            arguments_count.times.map do |argument_position|
               parameter_mode = extract_parameter_mode(instruction, argument_position)
               argument_pointer(memory, argument_position + 1, parameter_mode)
             end
@@ -59,7 +67,8 @@ module Universe
           end
 
           def output_address(memory)
-            memory.get_value(output_offset)
+            output_offset = 1 + arguments_count
+            memory.get_value(memory.pointer + output_offset)
           end
         end
       end
