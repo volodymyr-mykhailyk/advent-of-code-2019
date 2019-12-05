@@ -5,7 +5,7 @@ module Universe
     module Computer
       module Instructions
         class Multiply < Abstract
-          def execute_on_values(input1, input2)
+          def execute_on_values(_memory, input1, input2)
             input1 * input2
           end
 
@@ -14,6 +14,10 @@ module Universe
           end
 
           def has_output?
+            true
+          end
+
+          def advancing_pointer?
             true
           end
 

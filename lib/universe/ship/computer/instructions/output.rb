@@ -5,7 +5,7 @@ module Universe
     module Computer
       module Instructions
         class Output < Abstract
-          def execute_on_values(output)
+          def execute_on_values(_memory, output)
             @computer.put_output(output)
           end
 
@@ -15,6 +15,10 @@ module Universe
 
           def has_output?
             false
+          end
+
+          def advancing_pointer?
+            true
           end
 
           def arguments_count

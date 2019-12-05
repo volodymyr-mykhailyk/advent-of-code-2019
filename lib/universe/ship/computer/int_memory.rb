@@ -20,8 +20,14 @@ module Universe
 
         def advance_by(positions)
           check_address!(pointer + positions)
-          
+
           @pointer += positions
+        end
+
+        def advance_to(address)
+          check_address!(address)
+
+          @pointer = address
         end
 
         def pointer

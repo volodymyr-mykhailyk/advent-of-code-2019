@@ -7,7 +7,7 @@ RSpec.describe Universe::Ship::IntcodeComputer do
       describe scenario.title do
         it "produces correct state" do
           computer = described_class.new(scenario.program, scenario.input)
-          expect(computer.run_program).to match(scenario.state)
+          expect(computer.run_program).to eq(scenario.state)
         end
 
         it "produces correct output" do

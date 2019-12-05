@@ -5,6 +5,8 @@ require_relative 'instructions/input'
 require_relative 'instructions/output'
 require_relative 'instructions/less_than'
 require_relative 'instructions/equals'
+require_relative 'instructions/jump_if_true'
+require_relative 'instructions/jump_if_false'
 
 module Universe
   module Ship
@@ -18,6 +20,8 @@ module Universe
           Instructions::Output,
           Instructions::LessThan,
           Instructions::Equals,
+          Instructions::JumpIfTrue,
+          Instructions::JumpIfFalse,
         ]
       end
     end

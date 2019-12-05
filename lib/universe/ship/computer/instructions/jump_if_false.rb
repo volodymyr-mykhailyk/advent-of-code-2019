@@ -4,21 +4,25 @@ module Universe
   module Ship
     module Computer
       module Instructions
-        class Add < Abstract
-          def execute_on_values(_memory, input1, input2)
-            input1 + input2
+        class JumpIfFalse < Abstract
+          def execute_on_values(memory, input, address)
+            if input == 0
+              memory.advance_to(address)
+            else
+              advance_to_next_instruction(memory)
+            end
           end
 
           def opcode
-            1
+            6
           end
 
           def has_output?
-            true
+            false
           end
 
           def advancing_pointer?
-            true
+            false
           end
 
           def arguments_count

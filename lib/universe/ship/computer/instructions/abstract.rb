@@ -16,17 +16,16 @@ module Universe
           def execute_in(memory)
             instruction = memory.get_value(memory.pointer)
             result = execute_instruction(memory, instruction)
-            write_output(memory, result)
-            advance_to_next_instruction(memory)
+
+            write_output(memory, result) if has_output?
+            advance_to_next_instruction(memory) if advancing_pointer?
+
             memory
           end
-
 
           private
 
           def write_output(memory, result)
-            return unless has_output?
-
             output_address = output_address(memory)
             memory.put_value(output_address, result)
           end
@@ -40,7 +39,7 @@ module Universe
           def execute_instruction(memory, instruction)
             argument_pointers = extract_argument_pointers(memory, instruction)
             arguments = extract_arguments(memory, argument_pointers)
-            execute_on_values(*arguments)
+            execute_on_values(memory, *arguments)
           end
 
           def extract_argument_pointers(memory, instruction)

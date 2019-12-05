@@ -17,6 +17,10 @@ module Universe
             true
           end
 
+          def advancing_pointer?
+            true
+          end
+
           def arguments_count
             0
           end
