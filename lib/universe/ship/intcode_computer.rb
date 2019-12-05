@@ -24,6 +24,14 @@ module Universe
         @memory.contents
       end
 
+      def get_input
+
+      end
+
+      def put_output
+
+      end
+
       protected
 
       def unknown_command
