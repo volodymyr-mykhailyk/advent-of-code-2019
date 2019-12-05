@@ -5,7 +5,7 @@ module Universe
     module Computer
       module Instructions
         class Input < Abstract
-          def execute_on_values(*_args)
+          def execute_instruction(*_args)
             @computer.get_input
           end
 

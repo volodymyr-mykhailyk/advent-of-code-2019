@@ -37,19 +37,16 @@ module Universe
           end
 
           def execute_instruction(memory, instruction)
-            argument_pointers = extract_argument_pointers(memory, instruction)
-            arguments = extract_arguments(memory, argument_pointers)
-            execute_on_values(memory, *arguments)
+            arguments = extract_arguments(memory, instruction)
+            result_for(*arguments)
           end
 
-          def extract_argument_pointers(memory, instruction)
-            arguments_count.times.map do |argument_position|
+          def extract_arguments(memory, instruction)
+            pointers = arguments_count.times.map do |argument_position|
               parameter_mode = extract_parameter_mode(instruction, argument_position)
               argument_pointer(memory, argument_position + 1, parameter_mode)
             end
-          end
 
-          def extract_arguments(memory, pointers)
             pointers.map { |pointer| memory.get_value(pointer) }
           end
 

@@ -6,7 +6,7 @@ module Universe
     module Computer
       module Instructions
         class Exit < Abstract
-          def execute_on_values(*_args)
+          def execute_instruction(*_args)
             raise Universe::Ship::Errors::EndOfProgram, 'Program ended'
           end
 

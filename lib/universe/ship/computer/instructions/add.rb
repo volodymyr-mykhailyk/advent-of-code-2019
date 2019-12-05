@@ -5,7 +5,7 @@ module Universe
     module Computer
       module Instructions
         class Add < Abstract
-          def execute_on_values(_memory, input1, input2)
+          def result_for(input1, input2)
             input1 + input2
           end
 

@@ -5,7 +5,8 @@ module Universe
     module Computer
       module Instructions
         class JumpIfTrue < Abstract
-          def execute_on_values(memory, input, address)
+          def execute_instruction(memory, instruction)
+            input, address = extract_arguments(memory, instruction)
             if input != 0
               memory.advance_to(address)
             else
