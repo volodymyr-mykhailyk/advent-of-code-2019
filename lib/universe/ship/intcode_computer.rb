@@ -53,10 +53,7 @@ module Universe
 
       def next_instruction
         instruction = get_value(@pointer)
-        puts @pointer
-        puts instruction
         command_name = OP_CODES[instruction]
-        puts command_name.inspect
         method(command_name || :unknown_command)
       end
 
