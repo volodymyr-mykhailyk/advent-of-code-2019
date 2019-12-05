@@ -10,6 +10,7 @@ RSpec.describe Universe::Ship::IntcodeComputer do
       {input: [2, 4, 4, 5, 99, 0], output: [2, 4, 4, 5, 99, 9801]},
       {input: [1, 1, 1, 4, 99, 5, 6, 0, 99], output: [30, 1, 1, 4, 2, 5, 6, 0, 99]},
       {input: [4, 0, 99], output: [4, 0, 99]},
+      {input: [1101, 100, -1, 4, 0], output: [1101, 100, -1, 4, 99]},
     ]
 
     PROGRAMS.each do |input:, output:|
