@@ -7,8 +7,10 @@ module Universe
     class IntcodeComputer
       MAX_ITERATIONS = 100_000
 
-      def initialize(memory)
+      def initialize(memory, input = [])
         @memory = Computer::IntMemory.new(memory)
+        @input = input
+        @output = []
         @instructions = Computer::InstructionsList::ALL.map { |instruction| instruction.new(self) }
       end
 
@@ -25,11 +27,15 @@ module Universe
       end
 
       def get_input
-
+        @input.shift
       end
 
-      def put_output
+      def put_output(output)
+        @output << output
+      end
 
+      def output
+        @output
       end
 
       protected
