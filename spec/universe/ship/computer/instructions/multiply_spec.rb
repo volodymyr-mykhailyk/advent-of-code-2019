@@ -3,6 +3,8 @@ require 'universe/ship/computer/instructions/multiply'
 require 'universe/ship/computer/int_memory'
 
 RSpec.describe Universe::Ship::Computer::Instructions::Multiply do
+  subject { described_class.new(double('computer')) }
+
   describe '.matches?' do
     [
       {input: [2], output: true},

@@ -4,6 +4,8 @@ require 'universe/ship/errors/end_of_program'
 require 'universe/ship/computer/instructions/exit'
 
 RSpec.describe Universe::Ship::Computer::Instructions::Exit do
+  subject { described_class.new(double('computer')) }
+
   describe '.matches?' do
     [
       {input: [99], output: true},

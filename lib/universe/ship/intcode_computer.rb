@@ -9,19 +9,19 @@ module Universe
 
       def initialize(memory)
         @memory = Computer::IntMemory.new(memory)
-        @instructions = Computer::InstructionsList::ALL.map(&:new)
+        @instructions = Computer::InstructionsList::ALL.map { |instruction| instruction.new(self) }
       end
 
       def run_program
         MAX_ITERATIONS.times { run_instruction }
         raise 'Infinite loop'
       rescue Errors::EndOfProgram => _
-        @memory
+        @memory.contents
       end
 
       def run_instruction
         next_instruction.execute_in(@memory)
-        @memory
+        @memory.contents
       end
 
       protected

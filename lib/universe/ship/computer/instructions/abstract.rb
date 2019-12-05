@@ -3,6 +3,10 @@ module Universe
     module Computer
       module Instructions
         class Abstract
+          def initialize(computer)
+            @computer = computer
+          end
+
           def up_next_in?(memory)
             instruction = memory.get_value(memory.pointer)
             instruction_code = extract_instruction_code(instruction)
