@@ -3,7 +3,7 @@ module Universe
     module Computer
       class IntMemory
         def initialize(memory, pointer = 0)
-          @memory = memory
+          @memory = memory.clone
           @pointer = pointer
           @memory_size = memory.length
         end

@@ -9,7 +9,7 @@ module Universe
 
       def initialize(memory, input = [])
         @memory = Computer::IntMemory.new(memory)
-        @input = input
+        @input = input.clone
         @output = []
         @instructions = Computer::InstructionsList::ALL.map { |instruction| instruction.new(self) }
       end
