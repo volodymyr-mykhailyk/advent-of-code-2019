@@ -20,19 +20,33 @@ module Universe
         end
 
         def draw_map(prefix = '')
-          result = ""
-          result += prefix + "#{name}"
+          result = prefix + "#{name}"
           result += "\n" if satellites.any?
-          result += @satellites.each_value.map do |object|
-            object.draw_map(' ' * prefix.length + '|--')
+          result + @satellites.each_value.map do |object|
+            object.draw_map(prefix + '--')
           end.join("\n")
-          result
         end
 
-        def orbit_length(depth = 0)
+        def orbits_length(depth = 0)
           return depth if satellites.none?
 
-          depth + satellites.each_value.sum { |satellite| satellite.orbit_length(depth + 1) }
+          depth + satellites.each_value.sum { |satellite| satellite.orbits_length(depth + 1) }
+        end
+
+        def has_satellite?(name)
+          !!@satellites[name]
+        end
+
+        def path_to(object)
+          return [] if @satellites.include?(object)
+          next_transfer = satellites.values.find { |satellite| satellite.orbital_center_for?(object) }
+          ["#{name}-#{next_transfer.name}"] + next_transfer.path_to(object)
+        end
+
+        def orbital_center_for?(object)
+          return true if satellites.include?(object)
+
+          satellites.values.any? { |satellite| satellite.orbital_center_for?(object) }
         end
 
         def to_s

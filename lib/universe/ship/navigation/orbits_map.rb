@@ -7,16 +7,26 @@ module Universe
         def initialize(map)
           @objects_pointers = {}
           build_orbits_map(map)
-          @roots = find_root_objects
+          @root = find_root_object
         end
 
         def checksum
+          @root.orbits_length
+        end
+
+        def draw_map
           @roots.each do |body|
             puts "---" * 10
             puts body.draw_map
           end
-          puts @roots.inspect
-          @roots.sum(&:orbit_length)
+        end
+
+        def shortest_transfer_between(body1, body2)
+          central_transfer_to_1 = @root.path_to(body1)
+          central_transfer_to_2 = @root.path_to(body2)
+          uniq_transfers_1 = central_transfer_to_1.reject { |transfer| central_transfer_to_2.include?(transfer) }
+          uniq_transfers_2 = central_transfer_to_2.reject { |transfer| central_transfer_to_1.include?(transfer) }
+          uniq_transfers_1 + uniq_transfers_2
         end
 
         protected
@@ -36,13 +46,17 @@ module Universe
           end
         end
 
-        def find_root_objects
-          @objects_pointers.select do |name, _|
+        def find_root_object
+          root_objects = @objects_pointers.select do |name, _|
             @objects_pointers.none? do |parent, parent_body|
               next if parent == name
               parent_body.satellites.include?(name)
             end
           end.values
+
+          raise "Invalid orbital map. Too many root objects #{root_objects.map(&:name)}" if root_objects.length > 1
+
+          root_objects.first
         end
       end
     end
