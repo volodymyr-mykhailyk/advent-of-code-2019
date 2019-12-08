@@ -8,7 +8,7 @@ module Universe
       end
 
       def output_for(phases, input = 0)
-        phases.reduce(0) do |amplifier_input, phase|
+        phases.reduce(input) do |amplifier_input, phase|
           controller = IntcodeComputer.new(@controller_code, [phase, amplifier_input])
           controller.run_program
           controller.output.first
