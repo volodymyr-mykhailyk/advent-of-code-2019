@@ -1,3 +1,4 @@
+require 'chunky_png'
 require_relative '../utils/printer'
 require_relative '../utils/input_reader'
 require_relative '../../universe/communication/space_image'
@@ -15,3 +16,6 @@ image = Universe::Communication::SpaceImage.new(image_digits, image_width, image
 checksum = image.checksum
 info "Image has #{image.layers.count} layers"
 info "Image checksum: #{checksum}"
+
+info "Rendering image"
+info image.render_image
