@@ -18,7 +18,6 @@ module Universe
         MAX_ITERATIONS.times { run_instruction }
         raise 'Infinite loop'
       rescue Errors::EndOfProgram => _
-        @memory.contents
       end
 
       def run_instruction
@@ -28,6 +27,10 @@ module Universe
 
       def get_input
         @input.shift
+      end
+
+      def add_input(input = [])
+        @input.concat(input.clone)
       end
 
       def put_output(output)

@@ -1,4 +1,5 @@
 require_relative 'abstract'
+require_relative '../../errors/input_required'
 
 module Universe
   module Ship
@@ -6,7 +7,9 @@ module Universe
       module Instructions
         class Input < Abstract
           def execute_instruction(*_args)
-            @computer.get_input
+            raise Errors::InputRequired unless (input = @computer.get_input)
+
+            input
           end
 
           def opcode

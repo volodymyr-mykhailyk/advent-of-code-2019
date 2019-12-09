@@ -41,6 +41,15 @@ RSpec.describe Universe::Ship::Computer::Instructions::Input do
       subject.execute_in(memory)
       expect(memory.pointer).to eq(2)
     end
+
+    context 'when no input' do
+      let(:computer) { instance_double(Universe::Ship::IntcodeComputer, get_input: nil) }
+
+      it 'raising error' do
+        memory = build_memory([3, 0, 99])
+        expect { subject.execute_in(memory) }.to raise_error(Universe::Ship::Errors::InputRequired)
+      end
+    end
   end
 
   protected
