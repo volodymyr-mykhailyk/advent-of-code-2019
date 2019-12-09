@@ -2,9 +2,10 @@ module Universe
   module Ship
     module Computer
       class IntMemory
-        def initialize(memory, pointer = 0)
+        def initialize(memory, pointer = 0, relative_pointer = 0)
           @memory = memory.clone
           @pointer = pointer
+          @relative_pointer = relative_pointer
           @memory_size = memory.length
         end
 
@@ -24,6 +25,12 @@ module Universe
           @pointer += positions
         end
 
+        def advance_relative_by(positions)
+          check_address!(relative_pointer + positions)
+
+          @relative_pointer += positions
+        end
+
         def advance_to(address)
           check_address!(address)
 
@@ -32,6 +39,10 @@ module Universe
 
         def pointer
           @pointer
+        end
+
+        def relative_pointer
+          @relative_pointer
         end
 
         def contents

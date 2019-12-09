@@ -47,6 +47,23 @@ RSpec.describe Universe::Ship::Computer::IntMemory do
     end
   end
 
+  describe '.relative_pointer' do
+    it 'default on initialize' do
+      expect(subject.relative_pointer).to eq(0)
+    end
+  end
+
+  describe '.advance_relative_by' do
+    it 'updates pointer' do
+      subject.advance_relative_by(2)
+      expect(subject.relative_pointer).to eq(2)
+    end
+
+    it 'raises error when out of memory' do
+      expect { subject.advance_relative_by(10) }.to raise_error('Memory overflow. Size: 4, address: 10')
+    end
+  end
+
   describe '.advance_by' do
     it 'updates pointer' do
       subject.advance_by(2)
