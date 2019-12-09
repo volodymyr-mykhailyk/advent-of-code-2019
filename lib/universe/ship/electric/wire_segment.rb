@@ -2,6 +2,57 @@ module Universe
   module Ship
     module Electric
       class WireSegment
+        attr_reader :start_position, :end_position, :direction, :distance, :orientation, :range_x, :range_y
+
+        def initialize(path, start_position)
+          @direction, @distance = parse_path(path)
+          @start_position, @end_position = calculate_positions(start_position)
+          @orientation, @range_x, @range_y = calculate_ranges
+        end
+
+        def intersection_with(segment)
+          return parallel_intersection(segment) if segment.orientation == orientation
+          if orientation == :H
+            horizontal_intersection(segment)
+          else
+            vertical_intersection(segment)
+          end
+        end
+
+        def parallel_intersection(segment)
+          if orientation == :H
+            return unless height_delta == segment.height_delta
+            return unless (intersection = range_x.find { |x| segment.range_x.include?(x) })
+            [intersection, height_delta]
+          else
+            return unless width_delta == segment.width_delta
+            return unless (intersection = range_y.find { |y| segment.range_y.include?(y) })
+            [width_delta, intersection]
+          end
+        end
+
+        def horizontal_intersection(segment)
+          return unless range_x.include?(segment.width_delta) && segment.range_y.include?(height_delta)
+
+          [segment.width_delta, height_delta]
+        end
+
+        def vertical_intersection(segment)
+          return unless segment.range_x.include?(width_delta) && range_y.include?(segment.height_delta)
+
+          [width_delta, segment.height_delta]
+        end
+
+        def width_delta
+          start_position[0]
+        end
+
+        def height_delta
+          start_position[1]
+        end
+
+        protected
+
         NAVIGATION_MAP = {
           R: [1, 0],
           D: [0, -1],
@@ -9,51 +60,26 @@ module Universe
           U: [0, 1],
         }.freeze
 
-        attr_reader :start_position, :end_position
+        ORIENTATIONS_MAP = {
+          R: :H,
+          L: :H,
+          U: :V,
+          D: :V
+        }
 
-        def initialize(path, start_position)
-          @direction, @distance = parse_path(path)
-          @start_position = start_position
-          @end_position = calculate_end_position(@direction, @distance, start_position)
+        def calculate_ranges
+          orientation = ORIENTATIONS_MAP[direction]
+          range_x = [start_position[0], end_position[0]].sort
+          range_x = (range_x[0]..range_x[1])
+          range_y = [start_position[1], end_position[1]].sort
+          range_y = (range_y[0]..range_y[1])
+          [orientation, range_x, range_y]
         end
 
-        def intersection_with(segment)
-          return nil unless intersects_with_projection_of?(segment.start_position)
-          return nil unless intersects_with_projection_of?(segment.end_position)
-
-          s1_coordinate, s1_range = dimensions
-          s2_coordinate, s2_range = segment.dimensions
-
-          position = []
-          position[s1_coordinate] = segment.start_position[s1_coordinate]
-          position[s2_coordinate] = start_position[s2_coordinate]
-          position
-        end
-
-        def intersects_with_projection_of?(position)
-          coordinate, range = dimensions
-          range.include?(position[coordinate])
-        end
-
-        def dimensions
-          x1, y1 = start_position
-          x2, y2 = end_position
-          if x1 == x2
-            [1, (y1..y2)]
-          else
-            [0, (x1..x2)]
-          end
-        end
-
-        protected
-
-        def calculate_end_position(direction, distance, coords)
+        def calculate_positions(start_position)
           delta = NAVIGATION_MAP[direction].map { |multiplier| multiplier * distance }
-          puts '***' * 10
-          puts delta.inspect
-          puts @path.inspect
-          puts 'R6'[0].to_sym.inspect
-          coords.map.with_index { |value, index| value + delta[index] }
+          end_position = start_position.map.with_index { |value, index| value + delta[index] }
+          [start_position, end_position]
         end
 
         def parse_path(path)

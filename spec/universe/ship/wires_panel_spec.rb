@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'universe/ship/wires_panel'
 
-RSpec.describe Universe::Ship::WiresPanel, pending: true do
+RSpec.describe Universe::Ship::WiresPanel do
   Scenarios.for_each_in('wires_panel.yml') do |scenario|
     describe scenario.title do
       it 'calculates correct coordinates for wires crossing' do
