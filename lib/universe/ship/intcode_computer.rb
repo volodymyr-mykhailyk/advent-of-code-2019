@@ -18,6 +18,7 @@ module Universe
         MAX_ITERATIONS.times { run_instruction }
         raise 'Infinite loop'
       rescue Errors::EndOfProgram => _
+        @memory.contents
       end
 
       def run_instruction
