@@ -7,6 +7,7 @@ require_relative 'instructions/less_than'
 require_relative 'instructions/equals'
 require_relative 'instructions/jump_if_true'
 require_relative 'instructions/jump_if_false'
+require_relative 'instructions/adjust_relative_pointer'
 
 module Universe
   module Ship
@@ -22,6 +23,7 @@ module Universe
           Instructions::Equals,
           Instructions::JumpIfTrue,
           Instructions::JumpIfFalse,
+          Instructions::AdjustRelativePointer,
         ]
       end
     end

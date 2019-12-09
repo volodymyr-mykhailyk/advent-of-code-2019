@@ -53,9 +53,14 @@ module Universe
 
         def check_address!(address)
           raise "Invalid address: #{address}" if address < 0
-          raise "Memory overflow. Size: #{@memory_size}, address: #{address}" if @memory_size < address
+          increase_memory(address) if @memory_size < address
 
           true
+        end
+
+        def increase_memory(size)
+          (@memory.length..size).each { |index| @memory[index] = 0 }
+          @memory_size = size
         end
       end
     end

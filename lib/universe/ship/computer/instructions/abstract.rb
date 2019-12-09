@@ -52,6 +52,7 @@ module Universe
 
           def argument_pointer(memory, address_delta, parameter_mode)
             return memory.pointer + address_delta if parameter_mode == 1
+            return memory.relative_pointer + memory.get_value(memory.pointer + address_delta) if parameter_mode == 2
 
             memory.get_value(memory.pointer + address_delta)
           end
