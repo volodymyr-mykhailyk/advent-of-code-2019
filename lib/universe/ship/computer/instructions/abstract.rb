@@ -17,7 +17,7 @@ module Universe
             instruction = memory.get_value(memory.pointer)
             result = execute_instruction(memory, instruction)
 
-            write_output(memory, result) if has_output?
+            write_output(memory, result, instruction) if has_output?
             advance_to_next_instruction(memory) if advancing_pointer?
 
             memory
@@ -25,8 +25,8 @@ module Universe
 
           private
 
-          def write_output(memory, result)
-            output_address = output_address(memory)
+          def write_output(memory, result, instruction)
+            output_address = output_address(memory, instruction)
             memory.put_value(output_address, result)
           end
 
@@ -67,9 +67,10 @@ module Universe
             parameters_spec % 10
           end
 
-          def output_address(memory)
+          def output_address(memory, instruction)
             output_offset = 1 + arguments_count
-            memory.get_value(memory.pointer + output_offset)
+            parameter_mode = extract_parameter_mode(instruction, arguments_count)
+            argument_pointer(memory, output_offset, parameter_mode)
           end
         end
       end

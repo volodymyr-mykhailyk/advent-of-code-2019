@@ -11,29 +11,27 @@ module Universe
 
         def get_value(address)
           check_address!(address)
+          increase_memory(address)
+
           @memory[address]
         end
 
         def put_value(address, value)
           check_address!(address)
+          increase_memory(address)
+
           @memory[address] = value
         end
 
         def advance_by(positions)
-          check_address!(pointer + positions)
-
           @pointer += positions
         end
 
         def advance_relative_by(positions)
-          check_address!(relative_pointer + positions)
-
           @relative_pointer += positions
         end
 
         def advance_to(address)
-          check_address!(address)
-
           @pointer = address
         end
 
@@ -53,12 +51,12 @@ module Universe
 
         def check_address!(address)
           raise "Invalid address: #{address}" if address < 0
-          increase_memory(address) if @memory_size < address
 
           true
         end
 
         def increase_memory(size)
+          return if @memory_size > size
           (@memory.length..size).each { |index| @memory[index] = 0 }
           @memory_size = size
         end

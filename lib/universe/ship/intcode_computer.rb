@@ -5,7 +5,7 @@ require_relative 'computer/instructions_list'
 module Universe
   module Ship
     class IntcodeComputer
-      MAX_ITERATIONS = 100_000
+      MAX_ITERATIONS = 100_000_000
 
       def initialize(memory, input = [])
         @memory = Computer::IntMemory.new(memory)

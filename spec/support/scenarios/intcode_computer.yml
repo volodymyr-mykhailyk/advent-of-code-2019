@@ -94,3 +94,8 @@
   state: [1, 0, 0, 8, 99, 0, 0, 0, 2]
   input: []
   output: []
+- title: relative input mode
+  program: [109, 6, 203, -1, 99]
+  state: [109, 6, 203, -1, 99, 33]
+  input: [33]
+  output: []
