@@ -6,12 +6,13 @@ module Universe
       DIRECTIONS = [:U, :R, :D, :L]
       MOVEMENTS = {U: [0, -1], R: [1, 0], D: [0, 1], L: [-1, 0]}
 
-      def initialize(program, dimension = 100)
+      def initialize(program, dimension = 100, starting_color = 0)
         @computer = IntcodeComputer.new(program)
         @map = init_map(dimension)
         @painted_panels = @map.map(&:clone)
         @x, @y, @direction = init_robot(dimension)
         @painted_panels_count = 0
+        @map[@y][@x] = starting_color
       end
 
       def paint_side_panel
@@ -73,6 +74,8 @@ module Universe
         movement = MOVEMENTS[@direction]
         @x += movement[0]
         @y += movement[1]
+        raise 'out of bounds' if @x < 0 || @x > @map.length
+        raise 'out of bounds' if @y < 0 || @y > @map.length
       end
     end
   end
