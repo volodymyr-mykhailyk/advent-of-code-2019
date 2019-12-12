@@ -12,7 +12,7 @@ RSpec.describe Universe::Ship::Computer::Instructions::AdjustRelativePointer do
     [
       {program: [109, 3, 99, 0], pointer: 3},
       {program: [109, -5], pointer: -5},
-      {program: [9, 0], pointer: 109},
+      {program: [9, 0], pointer: 9},
     ].each do |program:, pointer:|
       it "sets correct relative pointer value for #{program}" do
         memory = build_memory(program)
