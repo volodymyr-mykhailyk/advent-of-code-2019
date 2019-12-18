@@ -5,6 +5,10 @@ module Universe
     module Objects
       class Wall < Abstract
         SYMBOL = '#'.freeze
+
+        def visible?
+          true
+        end
       end
     end
   end

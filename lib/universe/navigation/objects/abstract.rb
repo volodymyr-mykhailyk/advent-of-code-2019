@@ -12,6 +12,10 @@ module Universe
           self.class::SYMBOL
         end
 
+        def visible?
+          false
+        end
+
         def self.has_symbol?(symbol)
           symbol == self::SYMBOL
         end

@@ -13,6 +13,14 @@ module Universe
         @height = @objects.length
       end
 
+      def each(&block)
+        objects.each do |row|
+          row.each do |object|
+            block.call(object)
+          end
+        end
+      end
+
       def at(x, y)
         raise 'Position out of bounds' if out_of_bounds?(x, y)
         objects[y][x]
