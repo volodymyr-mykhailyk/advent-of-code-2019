@@ -7,6 +7,8 @@ module Universe
     class IntcodeComputer
       MAX_ITERATIONS = 100_000_000
 
+      attr_reader :memory
+
       def initialize(memory, input = [])
         @memory = Computer::IntMemory.new(memory)
         @input = input.clone
@@ -40,6 +42,12 @@ module Universe
 
       def output
         @output
+      end
+
+      def all_output
+        output = @output.clone
+        @output = []
+        output
       end
 
       protected
