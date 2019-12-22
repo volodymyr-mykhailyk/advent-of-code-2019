@@ -1,7 +1,7 @@
 module Universe
   module Navigation
     module Traversing
-      class VisibleObjects
+      class SolidObjects
         include Enumerable
 
         def initialize(map)
@@ -10,7 +10,7 @@ module Universe
 
         def each(&block)
           @map.each do |object|
-            next unless object.visible?
+            next unless object.solid?
             block.call(object)
           end
         end

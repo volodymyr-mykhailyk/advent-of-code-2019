@@ -6,7 +6,7 @@ module Universe
       class Wall < Abstract
         SYMBOL = '#'.freeze
 
-        def visible?
+        def solid?
           true
         end
       end

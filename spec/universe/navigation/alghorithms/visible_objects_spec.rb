@@ -20,7 +20,7 @@ MAP
   describe '.calculate_from_position' do
     it 'returns correct value for 0, 0' do
       position = Universe::Navigation::Position.new(0, 0)
-      expect(subject.calculate_from_position(position)).to eq(5)
+      expect(subject.calculate_from_position(position)).to eq(7)
     end
 
     it 'returns correct value for 3, 4' do

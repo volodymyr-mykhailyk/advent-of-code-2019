@@ -12,7 +12,7 @@ module Universe
           self.class::SYMBOL
         end
 
-        def visible?
+        def solid?
           false
         end
 
