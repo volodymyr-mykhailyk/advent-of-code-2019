@@ -11,7 +11,6 @@ module Universe
 
         def process_signal(digits)
           phases.times.reduce(digits) do |input, phase|
-            puts "processing #{phase}"
             process_phase(input)
           end
         end

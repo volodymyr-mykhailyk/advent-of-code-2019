@@ -4,7 +4,7 @@ require 'universe/navigation/objects_map_factory'
 require 'universe/navigation/algorithms/visible_objects'
 
 RSpec.describe Universe::Navigation::Algorithms::VisibleObjects do
-  MAP = <<MAP
+  VISIBLE_OBJECTS_MAP = <<MAP
 .#..#
 .....
 #####
@@ -13,7 +13,7 @@ RSpec.describe Universe::Navigation::Algorithms::VisibleObjects do
 MAP
 
   let(:factory) { Universe::Navigation::ObjectsMapFactory.new }
-  let(:objects) { MAP.split("\n").map { |line| line.split('') } }
+  let(:objects) { VISIBLE_OBJECTS_MAP.split("\n").map { |line| line.split('') } }
   let(:map) { Universe::Navigation::ObjectsMap.new(objects, factory) }
   subject { described_class.new(map) }
 
